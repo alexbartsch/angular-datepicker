@@ -25,6 +25,10 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.custom-disabled {
+  background: #000;
+  color: #FFF;
+}
 .date-picker-date-time {
   position: absolute;
 }

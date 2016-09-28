@@ -18,6 +18,12 @@ Module.constant('datePickerConfig', {
     hours: ['hours', 'isSameHour'],
     minutes: ['minutes', 'isSameMinutes'],
   },
+  classNames: {
+    disabled: 'disabled',
+    now: 'now',
+    active: 'active',
+    hidden: 'hidden'
+  },
   step: 5
 });
 
@@ -57,6 +63,13 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           scope.view = scope.views[0];
         }
       }
+
+      scope.classNames = {};
+      angular.forEach(datePickerConfig.classNames, function(className, classKey) {
+        scope.classNames[classKey] = attrs[classKey + 'Class'] || className;
+      });
+
+      console.log(scope.classNames);
 
       function getDate(name) {
         return datePickerUtils.getDate(scope, attrs, name);
@@ -123,7 +136,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         if (nextView) {
           scope.setView(nextView);
         } else if (autoclose) {
-          element.addClass('hidden');
+          element.addClass( scope.classNames.hidden );
           scope.$emit('hidePicker');
         } else {
           prepareViewData();
@@ -210,14 +223,14 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             for (j = 0; j < week.length; j++) {
               classList = '';
               if (datePickerUtils.isSameDay(date, week[j])) {
-                classList += 'active';
+                classList += scope.classNames.active;
               }
               if (isNow(week[j], view)) {
-                classList += ' now';
+                classList += ' ' + scope.classNames.now;
               }
               //if (week[j].month() !== date.month()) classList += ' disabled';
               if (week[j].month() !== date.month() || !inValidRange(week[j])) {
-                classList += ' disabled';
+                classList += ' ' + scope.classNames.disabled;
               }
               classes[i].push(classList);
             }
@@ -230,13 +243,13 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           for (i = 0; i < dates.length; i++) {
             classList = '';
             if (datePickerUtils[compareFunc](date, dates[i])) {
-              classList += 'active';
+              classList += scope.classNames.active;
             }
             if (isNow(dates[i], view)) {
-              classList += ' now';
+              classList += ' ' + scope.classNames.now;
             }
             if (!inValidRange(dates[i])) {
-              classList += ' disabled';
+              classList += ' ' + scope.classNames.disabled;
             }
             classes.push(classList);
           }

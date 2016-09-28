@@ -68,7 +68,7 @@
 
       <form name="demoForm">
       <div>
-        <h5>Min ({{demoForm.pickerMinDate.$error.min ? 'Min: invalid' : 'Min: valid'}})</h5>        
+        <h5>Min ({{demoForm.pickerMinDate.$error.min ? 'Min: invalid' : 'Min: valid'}})</h5>
         <input date-time name="pickerMinDate" ng-model="dates.today" id="pickerMinDate" min-date="minDate" view="date" min-view="hours" timezone="UTC" format="lll">
       </div>
 
@@ -89,6 +89,11 @@
 
         <div date-range id="pickerRange" start="dates.minDate" end="dates.maxDate" date-change="changeDate" view="date" min-view="date" timezone="UTC"></div>
 
+      </div>
+
+      <div>
+        <h2>Custom classnames</h2>
+        <div date-picker="dates.today" id="pickerCustomClassNamesDiv" disabled-class="custom-disabled" min-date="minDate" view="date" min-view="hours" timezone="UTC" watch-direct-changes="true"></div>
       </div>
 
     </div>
