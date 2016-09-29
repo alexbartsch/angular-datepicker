@@ -69,8 +69,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         scope.classNames[classKey] = attrs[classKey + 'Class'] || className;
       });
 
-      console.log(scope.classNames);
-
       function getDate(name) {
         return datePickerUtils.getDate(scope, attrs, name);
       }
