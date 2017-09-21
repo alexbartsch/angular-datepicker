@@ -80,6 +80,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         step = parseInt(attrs.step || datePickerConfig.step, 10),
         partial = !!attrs.partial,
         minDate = getDate('minDate'),
+        minDateFallbackDisabled = attrs.minDateFallbackDisabled !== undefined,
         maxDate = getDate('maxDate'),
         pickerID = element[0].id,
         now = scope.now = createMoment(),
@@ -298,7 +299,12 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
 
       clipDate = function (date) {
         if (minDate && minDate.isAfter(date)) {
-          return minDate;
+          // do not return any date, if minDateFallbackDisabled is true
+          if (minDateFallbackDisabled) {
+            return false;
+          } else {
+            return minDate;
+          }
         } else if (maxDate && maxDate.isBefore(date)) {
           return maxDate;
         } else {
