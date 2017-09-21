@@ -50,7 +50,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       before: '=?'
     },
     link: function (scope, element, attrs, ngModel) {
-      console.log(attrs);
       function prepareViews() {
         scope.views = datePickerConfig.views.concat();
         scope.view = attrs.view || datePickerConfig.view;
@@ -81,7 +80,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         step = parseInt(attrs.step || datePickerConfig.step, 10),
         partial = !!attrs.partial,
         minDate = getDate('minDate'),
-        minDateFallbackDisabled = attrs.minDateFallbackDisabled || false,
+        minDateFallbackDisabled = attrs.minDateFallbackDisabled !== undefined,
         maxDate = getDate('maxDate'),
         pickerID = element[0].id,
         now = scope.now = createMoment(),
